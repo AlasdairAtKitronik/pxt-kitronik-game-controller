@@ -12,15 +12,28 @@ namespace Kitronik_Game_Controller {
     //%
     void init() {
         if (initialized) return;
-        //This function sets all the buttons on the :GAME Controller to actually appear as buttons on the micro:bit
-        #define ALLOC_PIN_BUTTON(id) new MicroBitButton(getPin(id)->name, id, MICROBIT_BUTTON_ALL_EVENTS, PullUp);
-            ALLOC_PIN_BUTTON(MICROBIT_ID_IO_P8)
-            ALLOC_PIN_BUTTON(MICROBIT_ID_IO_P12)
-            ALLOC_PIN_BUTTON(MICROBIT_ID_IO_P13)
-            ALLOC_PIN_BUTTON(MICROBIT_ID_IO_P14)
-            ALLOC_PIN_BUTTON(MICROBIT_ID_IO_P15)
-            ALLOC_PIN_BUTTON(MICROBIT_ID_IO_P16)
-        #undef ALLOC_PIN_BUTTON
+
+        #if MICROBIT_CODAL
+            //This function sets all the buttons on the :GAME Controller to actually appear as buttons on the micro:bit
+            #define ALLOC_PIN_BUTTON(id) new Button(getPin(id)->name, id, DEVICE_BUTTON_ALL_EVENTS, ACTIVE_LOW);
+                ALLOC_PIN_BUTTON(MICROBIT_ID_IO_P8)
+                ALLOC_PIN_BUTTON(MICROBIT_ID_IO_P12)
+                ALLOC_PIN_BUTTON(MICROBIT_ID_IO_P13)
+                ALLOC_PIN_BUTTON(MICROBIT_ID_IO_P14)
+                ALLOC_PIN_BUTTON(MICROBIT_ID_IO_P15)
+                ALLOC_PIN_BUTTON(MICROBIT_ID_IO_P16)
+            #undef ALLOC_PIN_BUTTON
+        #else
+            //This function sets all the buttons on the :GAME Controller to actually appear as buttons on the micro:bit
+            #define ALLOC_PIN_BUTTON(id) new MicroBitButton(getPin(id)->name, id, MICROBIT_BUTTON_ALL_EVENTS, PullUp);
+                ALLOC_PIN_BUTTON(MICROBIT_ID_IO_P8)
+                ALLOC_PIN_BUTTON(MICROBIT_ID_IO_P12)
+                ALLOC_PIN_BUTTON(MICROBIT_ID_IO_P13)
+                ALLOC_PIN_BUTTON(MICROBIT_ID_IO_P14)
+                ALLOC_PIN_BUTTON(MICROBIT_ID_IO_P15)
+                ALLOC_PIN_BUTTON(MICROBIT_ID_IO_P16)
+            #undef ALLOC_PIN_BUTTON
+        #endif
 
         initialized = true;
     }
